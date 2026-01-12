@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS medicines (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+    dosage VARCHAR(20) NOT NULL,
+    hour INT NOT NULL CHECK (hour >= 0 AND hour <= 23),
+    minute INT NOT NULL CHECK (minute >= 0 AND minute <= 59),
+    box_num INT NOT NULL CHECK (box_num >= 1 AND box_num <= 2),
+    enabled BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);

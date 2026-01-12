@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # MySQL Database Service
+  mysql:
+    image: mysql:8.0
+    container_name: smart-medicine-box-mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=smart_medicine_box
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - smart-medicine-box-network
+
+  # MQTT Broker Service
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    container_name: smart-medicine-box-mosquitto
+    restart: always
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - mosquitto-data:/mosquitto/data
+      - mosquitto-log:/mosquitto/log
+    networks:
+      - smart-medicine-box-network
+
+volumes:
+  mysql-data:
+  mosquitto-data:
+  mosquitto-log:
+
+networks:
+  smart-medicine-box-network:
+    driver: bridge
